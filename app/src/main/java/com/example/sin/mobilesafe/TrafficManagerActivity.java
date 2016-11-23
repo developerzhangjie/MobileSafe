@@ -19,7 +19,7 @@ import engine.AppEngine;
 
 /**
  * Created by Sin on 2016/10/13.
- * Description:
+ * Description:流量监控
  */
 
 public class TrafficManagerActivity extends Activity {
@@ -41,7 +41,6 @@ public class TrafficManagerActivity extends Activity {
         new Thread() {
             @Override
             public void run() {
-                super.run();
                 lv_traffic_application.setAdapter(new MyAdapter());
                 ll_traffic_loading.setVisibility(View.GONE);
             }
@@ -49,7 +48,6 @@ public class TrafficManagerActivity extends Activity {
     }
 
     private class MyAdapter extends BaseAdapter {
-
         private AppInfo mAppInfo;
         private long mUidTxBytes;
         private String mTxSize;

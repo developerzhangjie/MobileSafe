@@ -33,7 +33,6 @@ import se.emilsjolander.stickylistheaders.WrapperViewList.LifeCycleListener;
  *   1. It acts like as ListView.
  *   2. It used to be a ListView subclass and refactoring the name would cause compatibility errors.
  *
- * @author Emil Sjölander
  */
 public class StickyListHeadersListView extends FrameLayout {
 

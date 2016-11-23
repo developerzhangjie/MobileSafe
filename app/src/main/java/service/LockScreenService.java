@@ -37,7 +37,6 @@ public class LockScreenService extends Service {
         intentFilter.addAction(Intent.ACTION_SCREEN_OFF);
         //3.注册广播接收者
         registerReceiver(mLockScreenReceiver, intentFilter);
-
     }
 
     @Override
@@ -51,7 +50,6 @@ public class LockScreenService extends Service {
         public void onReceive(Context context, Intent intent) {
             //进程清理
             killProcess();
-
         }
     }
 

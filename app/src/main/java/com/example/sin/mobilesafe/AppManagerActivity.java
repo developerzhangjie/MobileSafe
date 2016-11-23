@@ -120,15 +120,13 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
             @Override
             public void run() {
                 //判断是系统程序还是用户程序
-                for (AppInfo appInfo : list
-                        ) {
+                for (AppInfo appInfo : list) {
                     if (appInfo.isSystem) {
                         systemAppInfos.add(appInfo);
                     } else {
                         userAppInfos.add(appInfo);
                     }
                 }
-                super.run();
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
@@ -188,11 +186,9 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
                 contentView.findViewById(R.id.ll_pop_share).setOnClickListener(AppManagerActivity.this);
                 contentView.findViewById(R.id.ll_pop_info).setOnClickListener(AppManagerActivity.this);
                 mPopupWindow = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-                //mPopupWindow.setAnimationStyle(R.style.popupWindow);
-                mPopupWindow.showAsDropDown(view, 0 + 60, -view.getHeight());
+                mPopupWindow.showAsDropDown(view, 60, -view.getHeight());
             }
         });
-
     }
 
     // 隐藏popuwindow
@@ -222,6 +218,7 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
         popupWindowHide();
     }
 
+    //卸载应用
     private void uninstallApp() {
         if (!appInfo.packageName.equals(getPackageName())) {
             if (!appInfo.isSystem) {
@@ -329,11 +326,6 @@ public class AppManagerActivity extends Activity implements View.OnClickListener
                 viewHolder = (ViewHolder) view.getTag();
             }
             //获取相应的数据
-            if (position <= userAppInfos.size()) {
-                appInfo = userAppInfos.get(position - 1);
-            } else {
-                appInfo = systemAppInfos.get(position - userAppInfos.size() - 2);
-            }//获取相应的数据
             if (position <= userAppInfos.size()) {
                 appInfo = userAppInfos.get(position - 1);
             } else {

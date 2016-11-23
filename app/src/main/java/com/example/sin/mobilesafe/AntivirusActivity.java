@@ -34,7 +34,7 @@ import utils.MD5Utils;
 
 /**
  * Created by Sin on 2016/10/15.
- * Description:
+ * Description:手机杀毒
  */
 
 public class AntivirusActivity extends Activity {
@@ -78,7 +78,6 @@ public class AntivirusActivity extends Activity {
             @Override
             public void onClick(View v) {
                 closeAnimation();
-
             }
         });
 
@@ -92,6 +91,7 @@ public class AntivirusActivity extends Activity {
             @Override
             public void run() {
                 super.run();
+                //获取签名
                 final List<PackageInfo> packages = pm.getInstalledPackages(PackageManager.GET_SIGNATURES);
                 final int totalSize = packages.size();
                 for (final PackageInfo packageInfo : packages) {
@@ -137,7 +137,7 @@ public class AntivirusActivity extends Activity {
                                 }
                                 //设置左右图片显示
                                 ll_antivirus_canvas.setVisibility(View.VISIBLE);
-//                              获取进度条的缓存图片
+                                //                              获取进度条的缓存图片
                                 rel_antivirus_acrprogress.setDrawingCacheEnabled(true);
                                 rel_antivirus_acrprogress.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_HIGH);
                                 Bitmap bitmap = rel_antivirus_acrprogress.getDrawingCache();

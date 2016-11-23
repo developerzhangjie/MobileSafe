@@ -48,11 +48,6 @@ public class ProcessManagerActivity extends Activity implements View.OnClickList
     private LinearLayout ll_processmanager_loading;
     private StickyListHeadersListView lv_processmanager_process;
     private int mRunningProcessCount;
-    private int mAllProcessCount;
-    private long mFreeMemory;
-    private long mTotalMemory;
-    private String freeSize;
-    private String usedSize;
     private List<ProcessInfo> mList;
     private List<ProcessInfo> userProcessInfos;
     private List<ProcessInfo> systemProcessInfos;
@@ -60,19 +55,12 @@ public class ProcessManagerActivity extends Activity implements View.OnClickList
     private Button checkInverse;
     private Button checkAll;
     private ImageView iv_processmanager_clear;
-    private int mFreeProcessCount;
-    private int mRunningProcessRate;
-    private int mUsedMemoryRate;
-    private SlidingDrawer sd_processmanager_slidingdrawer;
-    private LinearLayout ll_processmanager_handle;
     private ImageView iv_processmanager_drawerarrowup1;
     private ImageView iv_processmanager_drawerarrowup2;
-    private LinearLayout ll_processmanager_content;
     private SettingView sv_processmanager_isshowsystem;
     private SettingView sv_processmanager_lockscreenclear;
     //系统进程是否显示标示
     private boolean isShowSystem = true;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,14 +79,11 @@ public class ProcessManagerActivity extends Activity implements View.OnClickList
         ll_processmanager_loading = (LinearLayout) findViewById(R.id.ll_processmanager_loading);
         lv_processmanager_process = (StickyListHeadersListView) findViewById(R.id.lv_processmanager_process);
         iv_processmanager_clear = (ImageView) findViewById(R.id.iv_processmanager_clear);
-        sd_processmanager_slidingdrawer = (SlidingDrawer) findViewById(R.id.sd_processmanager_slidingdrawer);
-        ll_processmanager_handle = (LinearLayout) findViewById(R.id.ll_processmanager_handle);
+        SlidingDrawer sd_processmanager_slidingdrawer = (SlidingDrawer) findViewById(R.id.sd_processmanager_slidingdrawer);
         iv_processmanager_drawerarrowup1 = (ImageView) findViewById(R.id.iv_processmanager_drawerarrowup1);
         iv_processmanager_drawerarrowup2 = (ImageView) findViewById(R.id.iv_processmanager_drawerarrowup2);
-        ll_processmanager_content = (LinearLayout) findViewById(R.id.ll_processmanager_content);
         sv_processmanager_isshowsystem = (SettingView) findViewById(R.id.sv_processmanager_isshowsystem);
         sv_processmanager_lockscreenclear = (SettingView) findViewById(R.id.sv_processmanager_lockscreenclear);
-
         checkAll = (Button) findViewById(R.id.checkAll);
         checkInverse = (Button) findViewById(R.id.checkInverse);
         //获取正在运行的进程数
@@ -148,11 +133,11 @@ public class ProcessManagerActivity extends Activity implements View.OnClickList
     //显示进程数据
     private void showProcessData() {
         //获取总的进程数
-        mAllProcessCount = ProcessUtils.getAllProcessCount(ProcessManagerActivity.this);
+        int mAllProcessCount = ProcessUtils.getAllProcessCount(ProcessManagerActivity.this);
         //获取空闲的进程数
-        mFreeProcessCount = mAllProcessCount - mRunningProcessCount;
+        int mFreeProcessCount = mAllProcessCount - mRunningProcessCount;
         //获取进度条的进度
-        mRunningProcessRate = (int) (mRunningProcessCount * 100f / mAllProcessCount + 0.5f);
+        int mRunningProcessRate = (int) (mRunningProcessCount * 100f / mAllProcessCount + 0.5f);
         //显示数据
         pv_processsmanager_processcount.setTitle("进程数:");
         pv_processsmanager_processcount.setUsed("正在运行" + mRunningProcessCount + "个");
@@ -163,16 +148,16 @@ public class ProcessManagerActivity extends Activity implements View.OnClickList
     //显示内存数据
     private void showMemoryData() {
         //获取可用内存
-        mFreeMemory = ProcessUtils.getFreeMemory(ProcessManagerActivity.this);
+        long mFreeMemory = ProcessUtils.getFreeMemory(ProcessManagerActivity.this);
         //获取总内存
-        mTotalMemory = ProcessUtils.getTotalMemory(ProcessManagerActivity.this);
+        long mTotalMemory = ProcessUtils.getTotalMemory(ProcessManagerActivity.this);
         //获取已用内存
         long usedMemory = mTotalMemory - mFreeMemory;
         //获取进度条的进度
-        mUsedMemoryRate = (int) (mFreeMemory * 100f / mTotalMemory + 0.5f);
+        int mUsedMemoryRate = (int) (mFreeMemory * 100f / mTotalMemory + 0.5f);
         //单位转换
-        freeSize = formatFileSize(ProcessManagerActivity.this, mFreeMemory);
-        usedSize = formatFileSize(ProcessManagerActivity.this, usedMemory);
+        String freeSize = formatFileSize(ProcessManagerActivity.this, mFreeMemory);
+        String usedSize = formatFileSize(ProcessManagerActivity.this, usedMemory);
         //显示数据
         pv_processsmanager_mermory.setTitle("内存:   ");
         pv_processsmanager_mermory.setUsed("占用内存:" + usedSize);
@@ -217,11 +202,7 @@ public class ProcessManagerActivity extends Activity implements View.OnClickList
                     processInfo = systemProcessInfos.get(position - userProcessInfos.size());
                 }
                 //2.修改chexkBox的状态
-                if (processInfo.isChecked) {
-                    processInfo.isChecked = false;
-                } else {
-                    processInfo.isChecked = true;
-                }
+                processInfo.isChecked = !processInfo.isChecked;
                 //3.更新界面
                 mMyAdapter.notifyDataSetChanged();
             }
@@ -349,8 +330,7 @@ public class ProcessManagerActivity extends Activity implements View.OnClickList
             //设置系统进程是否显示
             case R.id.sv_processmanager_isshowsystem:
                 sv_processmanager_isshowsystem.toggle();
-                boolean toggle = sv_processmanager_isshowsystem.getToggle();
-                isShowSystem = toggle;
+                isShowSystem = sv_processmanager_isshowsystem.getToggle();
                 //更新界面
                 mMyAdapter.notifyDataSetChanged();
                 SharedPreferencesUtils.saveBoolean(ProcessManagerActivity.this, Constants.PROCESSISSHOWSYSTEM, sv_processmanager_isshowsystem.getToggle());

@@ -17,7 +17,6 @@ import android.support.annotation.RequiresApi;
 import android.telephony.PhoneStateListener;
 import android.telephony.SmsMessage;
 import android.telephony.TelephonyManager;
-import android.util.Log;
 
 import com.android.internal.telephony.ITelephony;
 
@@ -28,7 +27,7 @@ import db.dao.BlackNumberDao;
 
 /**
  * Created by Sin on 2016/9/26.
- * Description:
+ * Description:短信拦截和电话拦截的服务
  */
 
 public class CallSMSSafeService extends Service {
@@ -110,13 +109,10 @@ public class CallSMSSafeService extends Service {
             });
         }
 
-
         @Override
         public void uncaughtException(Thread thread, Throwable throwable) {
-            Log.i("AAA", "uncaughtException   " + throwable);
         }
     }
-
 
     //电话监听
     private class MyPhoneStateListener extends PhoneStateListener {
@@ -127,7 +123,6 @@ public class CallSMSSafeService extends Service {
                 case TelephonyManager.CALL_STATE_RINGING:
                     int mode = mBlackNumberDao.queryBlackNumber(incomingNumber);
                     if (mode == BlackNumberConstant.BLACKNUMBER_CALL || mode == BlackNumberConstant.BALCKNUMBER_ALL) {
-                        System.out.println("电话拦截");
                         endCall();
                         //删除通话记录
                         final ContentResolver resolver = getContentResolver();
@@ -159,22 +154,18 @@ public class CallSMSSafeService extends Service {
             // 1.获取字节码文件
             // Class.forName("android.os.ServiceManager");
             // 通过类加载器获取字节码
-            Class<?> loadClass = CallSMSSafeService.class.getClassLoader()
-                    .loadClass("android.os.ServiceManager");
+            Class<?> loadClass = CallSMSSafeService.class.getClassLoader().loadClass("android.os.ServiceManager");
             // 2.获取其中的方法
             // name : 方法名
             // parameterTypes : 方法参数的类型
-            Method method = loadClass.getDeclaredMethod("getService",
-                    String.class);
+            Method method = loadClass.getDeclaredMethod("getService", String.class);
             // 3.执行这个方法
             // method : 对象,如果调用的方法不是静态方法,需要指定方法所在的类的对象,如果是静态直接null
             // args : 方法的参数
-            IBinder invoke = (IBinder) method.invoke(null,
-                    Context.TELEPHONY_SERVICE);
+            IBinder invoke = (IBinder) method.invoke(null, Context.TELEPHONY_SERVICE);
             ITelephony iTelephony = ITelephony.Stub.asInterface(invoke);
             iTelephony.endCall();
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }// 挂断电话
     }

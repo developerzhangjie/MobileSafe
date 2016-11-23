@@ -8,7 +8,7 @@ import java.io.File;
 
 /**
  * Created by Sin on 2016/10/16.
- * Description:
+ * Description:通过md5判断是否是病毒
  */
 
 public class AntivirusDao {

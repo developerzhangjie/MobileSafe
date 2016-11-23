@@ -4,7 +4,7 @@ import android.graphics.drawable.Drawable;
 
 /**
  * Created by Sin on 2016/10/13.
- * Description:
+ * Description:缓存的描述信息
  */
 
 public class CacheInfo {

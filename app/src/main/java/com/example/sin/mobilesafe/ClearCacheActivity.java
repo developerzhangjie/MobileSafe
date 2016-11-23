@@ -34,7 +34,7 @@ import bean.CacheInfo;
 
 /**
  * Created by Sin on 2016/10/13.
- * Description:
+ * Description:缓存清理
  */
 
 public class ClearCacheActivity extends Activity {
@@ -54,7 +54,6 @@ public class ClearCacheActivity extends Activity {
     private TextView tv_clearcache_cleartext;
     private Button btn_clearcache_scan;
     private TranslateAnimation translateAnimation;
-
     //缓存软件的个数
     private int totalCount = 0;
     //缓存软件的缓存总大小
@@ -87,7 +86,7 @@ public class ClearCacheActivity extends Activity {
         ll_clearcache_progressbar.setVisibility(View.VISIBLE);
         rel_clearcache_scan.setVisibility(View.GONE);
         list = new ArrayList<>();
-        list.clear();
+        //list.clear();
         //设置图标里面的横线上下滑动的动画
         translateAnimation = new TranslateAnimation(
                 TranslateAnimation.RELATIVE_TO_PARENT, 0, TranslateAnimation.RELATIVE_TO_PARENT, 0,
@@ -131,7 +130,6 @@ public class ClearCacheActivity extends Activity {
                     //5.获取缓存大小
                     //反射
                     try {
-                        //Method getPackageSizeInfo = pm.getClass().getDeclaredMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
                         Method getPackageSizeInfo = pm.getClass().getMethod("getPackageSizeInfo", String.class, IPackageStatsObserver.class);
                         getPackageSizeInfo.invoke(pm, packageInfo.packageName, mStatsObserver);
                     } catch (Exception e) {
@@ -199,12 +197,14 @@ public class ClearCacheActivity extends Activity {
                         btn_clearcache_clear.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                //毛用没有
                                 try {
                                     Method method = pm.getClass().getDeclaredMethod("freeStorageAndNotify", Long.TYPE, IPackageDataObserver.class);
                                     method.invoke(pm, Long.MAX_VALUE, new MyIPackageDataObserver());
                                 } catch (Exception e) {
                                     e.printStackTrace();
                                 }
+                                // DataCleanManager.cleanExternalCache(ClearCacheActivity.this);
                                 scan();
                             }
                         });

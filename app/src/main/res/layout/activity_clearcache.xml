@@ -79,7 +79,6 @@
                     android:textSize="15sp"
                     />
             </LinearLayout>
-
         </LinearLayout>
 
         <RelativeLayout
@@ -123,7 +122,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        ></ListView>
+        />
 
 
     <Button

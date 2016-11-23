@@ -109,7 +109,6 @@ public class CallSmsSafeActivity extends Activity implements View.OnClickListene
         new Thread() {
             @Override
             public void run() {
-                //list = blackNumberDao.queryAllBlackNumber();
                 if (list == null) {
                     list = blackNumberDao.queryPartBlackNumber(MAX_NUMBER, startIndex);
                 } else {
