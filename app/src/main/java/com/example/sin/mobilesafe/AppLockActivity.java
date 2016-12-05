@@ -102,8 +102,10 @@ public class AppLockActivity extends Activity implements View.OnClickListener {
                 bn_applock_unlock.setBackgroundResource(R.drawable.dg_btn_confirm_normal);
                 bn_applock_lock.setBackgroundResource(R.drawable.dg_button_cancel_normal);
                 //文字颜色更换
-                bn_applock_unlock.setTextColor(Color.parseColor("#ffffff"));
+                bn_applock_unlock.setTextColor(Color.parseColor("#ff0000"));
                 bn_applock_lock.setTextColor(Color.parseColor("#429ED6"));
+                bn_applock_unlock.setText("哈哈哈");
+                bn_applock_lock.setText("卡卡");
                 //列表界面更换
                 ll_applock_unlock.setVisibility(View.VISIBLE);
                 ll_applock_lock.setVisibility(View.GONE);

@@ -34,6 +34,7 @@ public class SettingView extends RelativeLayout {
         boolean isShow = typedArray.getBoolean(R.styleable.SettingView_isToggle, true);
         typedArray.recycle();
         tv_setting_title.setText(title);
+        tv_setting_title.setTextSize(18);
         iv_setting_islock.setVisibility(isShow ? View.VISIBLE : View.GONE);
         switch (bkg) {
             case 0:

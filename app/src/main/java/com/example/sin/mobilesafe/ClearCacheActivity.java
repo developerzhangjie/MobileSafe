@@ -58,6 +58,8 @@ public class ClearCacheActivity extends Activity {
     private int totalCount = 0;
     //缓存软件的缓存总大小
     private long cacheSizeCount = 0;
+    //是否点击了一键清理
+    private boolean clickClearCache = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,8 +151,11 @@ public class ClearCacheActivity extends Activity {
                 @Override
                 public void run() {
                     //6.设置显示缓存信息
-                    tv_clearcache_clearsize.setText("缓存大小：" + Formatter.formatFileSize(ClearCacheActivity.this, cachesize));
-                    //7.设置显示扫描软件的信息
+                    if (clickClearCache) {
+                        tv_clearcache_clearsize.setText("缓存大小：0MB");
+                    } else {
+                        tv_clearcache_clearsize.setText("缓存大小：" + Formatter.formatFileSize(ClearCacheActivity.this, cachesize));
+                    }//7.设置显示扫描软件的信息
                     try {
                         ApplicationInfo mApplicationInfo = pm.getApplicationInfo(packagename, 0);
                         String name = mApplicationInfo.loadLabel(pm).toString();
@@ -185,7 +190,11 @@ public class ClearCacheActivity extends Activity {
                         ll_clearcache_progressbar.setVisibility(View.GONE);
                         rel_clearcache_scan.setVisibility(View.VISIBLE);
                         //在扫描界面显示缓存信息
-                        tv_clearcache_cleartext.setText("总共有" + totalCount + "缓存,共" + Formatter.formatFileSize(ClearCacheActivity.this, cacheSizeCount));
+                        if (clickClearCache) {
+                            tv_clearcache_cleartext.setText("总共有0缓存,共0MB");
+                        } else {
+                            tv_clearcache_cleartext.setText("总共有" + totalCount + "缓存,共" + Formatter.formatFileSize(ClearCacheActivity.this, cacheSizeCount));
+                        }
                         btn_clearcache_scan.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -197,14 +206,17 @@ public class ClearCacheActivity extends Activity {
                         btn_clearcache_clear.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                clickClearCache = true;
                                 //毛用没有
-                                try {
+                                /*try {
                                     Method method = pm.getClass().getDeclaredMethod("freeStorageAndNotify", Long.TYPE, IPackageDataObserver.class);
                                     method.invoke(pm, Long.MAX_VALUE, new MyIPackageDataObserver());
                                 } catch (Exception e) {
                                     e.printStackTrace();
-                                }
+                                }*/
+
                                 // DataCleanManager.cleanExternalCache(ClearCacheActivity.this);
+                                //tv_clearcache_clearsize.setText("缓存大小：" + Formatter.formatFileSize(ClearCacheActivity.this, cachesize));
                                 scan();
                             }
                         });
