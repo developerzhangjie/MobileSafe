@@ -29,14 +29,38 @@
         />
 
     <TextView
-        android:id="@+id/tv_address_phoneaddress"
-        android:layout_width="wrap_content"
+        android:id="@+id/provinceCity"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="归属地:"
+        android:padding="2dp"
         android:textColor="#aa000000"
-        android:textSize="18sp"
-        />
+        android:textSize="18sp"/>
 
+    <TextView
+        android:id="@+id/operator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="2dp"
+        android:textColor="#aa000000"
+        android:textSize="18sp"/>
 
+    <TextView
+        android:id="@+id/cityCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="2dp"
+        android:textColor="#aa000000"
+        android:textSize="18sp"/>
+
+    <TextView
+        android:id="@+id/zipCode"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:padding="2dp"
+        android:textColor="#aa000000"
+        android:textSize="18sp"/>
 </LinearLayout>

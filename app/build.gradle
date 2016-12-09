@@ -38,6 +38,7 @@ dependencies {
     compile project(path: ':library')
     compile files('libs/gson-2.2.1.jar')
     compile project(':library')
+    compile 'eu.the4thfloor.volley:com.android.volley:2015.05.28'
 }
 
 android {
